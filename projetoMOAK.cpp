@@ -130,6 +130,34 @@ void listarQuartos() {
     }
 }
 
+void listarQuartosDisponiveis() {
+    char dataCheckin[11], dataCheckout[11];
+
+    do {
+        printf("Digite a data de check-in (DD/MM/AAAA): ");
+        scanf("%s", dataCheckin);
+    } while (strlen(dataCheckin) != 10);
+
+    do {
+        printf("Digite a data de check-out (DD/MM/AAAA): ");
+        scanf("%s", dataCheckout);
+    } while (strlen(dataCheckout) != 10);
+
+    printf(CYAN "\n--- Lista de Quartos Disponíveis ---\n" RESET);
+    int disponiveis = 0;
+    for (int i = 0; i < totalQuartos; i++) {
+        if (verificarDisponibilidade(quartos[i].id, dataCheckin, dataCheckout)) {
+            printf("ID: %d | Tipo: %s | Preço: %.2f | Capacidade: %d\n",
+                   quartos[i].id, quartos[i].tipo, quartos[i].preco, quartos[i].capacidade);
+            disponiveis++;
+        }
+    }
+
+    if (disponiveis == 0) {
+        printf(RED "Nenhum quarto disponível para o intervalo de datas fornecido.\n" RESET);
+    }
+}
+
 void editarQuarto() {
     int id;
     printf("Digite o ID do quarto que deseja editar: ");
@@ -172,15 +200,15 @@ void realizarReserva() {
         return;
     }
 
- do {
-  printf("Digite a data de check-in (DD/MM/AAAA): ");
-  scanf("%s", dataCheckin);
- } while (strlen(dataCheckin) != 10);
+	do {
+		printf("Digite a data de check-in (DD/MM/AAAA): ");
+		scanf("%s", dataCheckin);
+	} while (strlen(dataCheckin) != 10);
    
     do {
-     printf("Digite a data de check-out (DD/MM/AAAA): ");
-     scanf("%s", dataCheckout);
- } while (strlen(dataCheckout) != 10);
+    	printf("Digite a data de check-out (DD/MM/AAAA): ");
+    	scanf("%s", dataCheckout);
+ 	} while (strlen(dataCheckout) != 10);
 
     if (!verificarDisponibilidade(idQuarto, dataCheckin, dataCheckout)) {
         printf(RED "O quarto selecionado está indisponível para as datas escolhidas.\n" RESET);
@@ -228,77 +256,86 @@ void cancelarReserva() {
 void menu() {
     int opcao;
     do {
-        printf(BLUE "\n==============================\n");
-        printf(" SISTEMA DE RESERVAS \n");
-        printf("==============================\n\n" RESET);
-        printf("Seja bem-vindo(a), como podemos ajudá-lo hoje?\n\n");
-        printf("1. Cadastrar Cliente\n");
-        printf("2. Listar Clientes\n");
-        printf("3. Editar Cliente\n");
-        printf("4. Cadastrar Quarto\n");
-        printf("5. Listar Quartos\n");
-        printf("6. Editar Quarto\n");
-        printf("7. Realizar Reserva\n");
-        printf("8. Listar Reservas\n");
-        printf("9. Cancelar Reserva\n");
-        printf("10. Sair\n");
-        printf(BLUE "==============================\n" RESET);
-        printf("Escolha uma opção: ");
+    	fflush(stdin);
+    	
+    	printf(CYAN " ______________________________ ");
+        printf(CYAN "\n|                              |\n");
+        printf("|     SISTEMA DE RESERVAS      |\n");
+        printf("|______________________________|\n|                              |\n" RESET);
+        printf(CYAN "|" RESET " Seja bem-vindo(a),           " CYAN "|" RESET "\n" CYAN "|" RESET " como podemos ajudar hoje?    " CYAN "|" RESET "\n" CYAN "|                              |" RESET "\n");
+        printf(CYAN "|" RESET "1.  Cadastrar Cliente         " CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "2.  Listar Clientes           " CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "3.  Editar Cliente            " CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "4.  Cadastrar Quarto          " CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "5.  Listar Quartos            " CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "6.  Listar Quartos Disponíveis" CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "7.  Editar Quarto             " CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "8.  Realizar Reserva          " CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "9.  Listar Reservas           " CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "10. Cancelar Reserva          " CYAN "|" RESET "\n");
+        printf(CYAN "|" RESET "11. " RED "Sair                      " CYAN "|" RESET "\n" RESET);
+        printf(CYAN "|______________________________|\n" RESET);
+        printf("\nEscolha uma opção: ");
         scanf("%d", &opcao);
 
         switch (opcao) {
-         case 1:
-             cadastrarCliente();
-             system("pause");
-             system("cls");
-             break;
-         case 2:
-             listarClientes();
-             system("pause");
-             system("cls");
-             break;
-         case 3:
-             editarCliente();
-             system("pause");
-             system("cls");
-             break;
-         case 4:
-             cadastrarQuarto();
-             system("pause");
-             system("cls");
-             break;
-         case 5:
-             listarQuartos();
-             system("pause");
-             system("cls");
-             break;
-         case 6:
-             editarQuarto();
-             system("pause");
-             system("cls");
-             break;
-         case 7:
-             realizarReserva();
-              system("pause");
-             system("cls");
-             break;
-         case 8:
-             listarReservas();
-             system("pause");
-             system("cls");
-             break;
-         case 9:
-             cancelarReserva();
-             system("pause");
-             system("cls");
-             break;
-         case 10:
-             printf("Saindo...\n");
-             break;
-         default:
-             printf(RED "Opção inválida! Tente novamente.\n" RESET);
-             system("pause");
-             system("cls");
+        case 1:
+            cadastrarCliente();
+            system("pause");
+            system("cls");
+            break;
+        case 2:
+            listarClientes();
+            system("pause");
+            system("cls");
+            break;
+        case 3:
+            editarCliente();
+            system("pause");
+            system("cls");
+            break;
+        case 4:
+            cadastrarQuarto();
+            system("pause");
+            system("cls");
+            break;
+        case 5:
+            listarQuartos();
+            system("pause");
+            system("cls");
+            break;
+		case 6:
+		    listarQuartosDisponiveis();
+		    system("pause");
+		    system("cls");
+			break;
+        case 7:
+            editarQuarto();
+            system("pause");
+            system("cls");
+            break;
+        case 8:
+            realizarReserva();
+        	system("pause");
+            system("cls");
+            break;
+        case 9:
+            listarReservas();
+            system("pause");
+            system("cls");
+            break;
+        case 10:
+            cancelarReserva();
+            system("pause");
+            system("cls");
+            break;
+        case 11:
+            printf(RED "Saindo...\n" RESET);
+            break;
+        default:
+            printf(RED "Opção inválida! Tente novamente.\n" RESET);
+            system("pause");
+            system("cls");
         }
     } while (opcao != 10);
 }
