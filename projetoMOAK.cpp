@@ -108,6 +108,7 @@ void cadastrarQuarto() {
     }
     Quarto novo;
     novo.id = totalQuartos + 1;
+    
     do {
         fflush(stdin);
         printf("Digite o tipo do quarto (standart/master/deluxe): ");
@@ -116,8 +117,12 @@ void cadastrarQuarto() {
 
     printf("Digite o preço do quarto: ");
     scanf("%f", &novo.preco);
-    printf("Digite a capacidade do quarto (MAX 6): ");
-    scanf("%d", &novo.capacidade);
+    
+    do {
+		printf("Digite a capacidade do quarto (MAX 6): ");
+	    scanf("%d", &novo.capacidade);
+    } while (novo.capacidade < 1 || novo.capacidade > 6);
+    
     quartos[totalQuartos++] = novo;
     printf(GREEN "Quarto cadastrado com sucesso! ID: %d\n" RESET, novo.id);
 }
